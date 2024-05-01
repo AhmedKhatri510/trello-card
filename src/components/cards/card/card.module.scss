@@ -1,0 +1,16 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #1919193e;
+  padding: 10px;
+  margin: 0 10px;
+  border-radius: 10px;
+  .title {
+    margin: 0;
+  }
+  .description {
+    margin: 0;
+    text-wrap: wrap;
+  }
+}
