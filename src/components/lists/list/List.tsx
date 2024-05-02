@@ -9,12 +9,17 @@ import styles from "./list.module.scss";
 import Cards from "../../cards/Cards";
 
 type Props = {
+  onAddCardClick: (list: string) => void;
   listItem: ListType;
 };
 
-const List = ({ listItem }: Props) => {
+const List = ({ listItem, onAddCardClick }: Props) => {
   const { list, cards } = listItem;
-  const handleClick = () => {};
+
+  const handleClick = () => {
+    onAddCardClick(list);
+  };
+
   return (
     <div className={styles.listContainer}>
       <div className={styles.heading}>

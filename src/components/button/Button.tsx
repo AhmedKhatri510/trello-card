@@ -6,13 +6,15 @@ import styles from "./button.module.scss";
 
 type Props = {
   text: string;
+  btnType?: "submit" | "reset" | "button" | undefined;
   type: "light" | "dark";
   handleClick: () => void;
 };
-const Button = ({ text, type, handleClick }: Props) => {
+const Button = ({ text, btnType, type, handleClick }: Props) => {
   const isLightBtn = type === "light";
   return (
     <button
+      type={btnType || "button"}
       className={cn(
         styles.btn,
         { [styles.light]: isLightBtn },

@@ -15,7 +15,7 @@ const Cards = ({ cards }: Props) => {
   return (
     <div className={styles.cardsContainer}>
       {cards.map((card) => (
-        <Card card={card} />
+        <Card card={card} key={card.id} />
       ))}
     </div>
   );
