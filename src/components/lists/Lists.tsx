@@ -110,6 +110,8 @@ const Lists = () => {
     <div className={styles.listsContainer}>
       <ListContext.Provider
         value={{
+          lists,
+          setLists,
           isEditing,
           setIsEditing,
           editingCard,

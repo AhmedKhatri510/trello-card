@@ -23,8 +23,17 @@ const Card = ({ list, card }: Props) => {
     setIsEditing(true);
   };
 
+  const handleDragStart: React.DragEventHandler<HTMLDivElement> = (e) => {
+    e.dataTransfer.setData("movedListCard", JSON.stringify({ list, ...card }));
+  };
+
   return (
-    <div className={styles.cardContainer} onClick={handleCardClick}>
+    <div
+      className={styles.cardContainer}
+      onClick={handleCardClick}
+      draggable
+      onDragStart={handleDragStart}
+    >
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.description}>{description}</p>
     </div>

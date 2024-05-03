@@ -53,7 +53,6 @@ const CardModal = ({ listOptions, defaultList, onCancel, onSubmit }: Props) => {
     validationSchema: cardSchema,
     validateOnBlur: true,
     onSubmit: (values) => {
-      console.log(values);
       if (isEditing) {
         handleEditSubmit(values);
       } else onSubmit(values);

@@ -1,7 +1,9 @@
 import React, { createContext } from "react";
-import { EditingCard, InitialValues } from "../type/type";
+import { EditingCard, InitialValues, ListType } from "../type/type";
 
 type ListContextType = {
+  lists: ListType[];
+  setLists: React.Dispatch<React.SetStateAction<ListType[]>>;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingCard: React.Dispatch<React.SetStateAction<EditingCard | null>>;
   isEditing: boolean;
@@ -12,6 +14,8 @@ type ListContextType = {
 };
 
 const initialContext: ListContextType = {
+  lists: [],
+  setLists: () => {},
   setIsEditing: () => {},
   setEditingCard: () => null,
   isEditing: false,
