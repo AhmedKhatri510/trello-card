@@ -74,6 +74,11 @@
       gap: 10px;
       justify-content: flex-end;
 
+      .editingActionContainer {
+        display: flex;
+        gap: 10px;
+      }
+
       Button {
         cursor: pointer;
       }

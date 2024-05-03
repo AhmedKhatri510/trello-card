@@ -26,7 +26,7 @@ const List = ({ listItem, onAddCardClick }: Props) => {
         <h3 className={styles.listName}>{list}</h3>
         <Button text="Add Card" type="dark" handleClick={handleClick} />
       </div>
-      <Cards cards={cards} />
+      <Cards list={list} cards={cards} />
     </div>
   );
 };

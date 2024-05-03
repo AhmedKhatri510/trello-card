@@ -14,3 +14,5 @@ export type InitialValues = {
   title: string;
   description: string;
 };
+
+export type EditingCard = CardType & { list: string };

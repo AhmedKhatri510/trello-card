@@ -1,17 +1,30 @@
 // types
+import { useContext } from "react";
 import { CardType } from "../../../type/type";
 
 // styles
 import styles from "./card.module.scss";
+import { ListContext } from "../../../context/listContext";
 
 type Props = {
+  list: string;
   card: CardType;
 };
 
-const Card = ({ card }: Props) => {
+const Card = ({ list, card }: Props) => {
   const { title, description } = card;
+
+  const { setEditingCard, setIsEditing, setDefaultList } =
+    useContext(ListContext);
+
+  const handleCardClick = () => {
+    setEditingCard({ list, ...card });
+    setDefaultList(list);
+    setIsEditing(true);
+  };
+
   return (
-    <div className={styles.cardContainer}>
+    <div className={styles.cardContainer} onClick={handleCardClick}>
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.description}>{description}</p>
     </div>

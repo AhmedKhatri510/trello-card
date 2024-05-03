@@ -1,6 +1,6 @@
 // utils
 import cn from "classnames";
-import { capitalizeFirstLetter } from "../../helper/utils";
+import { capitalizeFirstLetter, deepEqual } from "../../helper/utils";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -12,6 +12,8 @@ import { InitialValues } from "../../type/type";
 
 // styles
 import styles from "./card-modal.module.scss";
+import { useContext } from "react";
+import { ListContext } from "../../context/listContext";
 
 type Props = {
   listOptions: string[];
@@ -21,11 +23,20 @@ type Props = {
 };
 
 const CardModal = ({ listOptions, defaultList, onCancel, onSubmit }: Props) => {
-  const initialValues: InitialValues = {
-    list: defaultList,
-    title: "",
-    description: "",
-  };
+  const { isEditing, editingCard, handleEditSubmit, handleDeleteCard } =
+    useContext(ListContext);
+
+  const initialValues: InitialValues = isEditing
+    ? {
+        list: editingCard?.list as string,
+        title: editingCard?.title as string,
+        description: editingCard?.description as string,
+      }
+    : {
+        list: defaultList,
+        title: "",
+        description: "",
+      };
 
   const cardSchema = Yup.object({
     list: Yup.string().required("list is required!"),
@@ -43,9 +54,13 @@ const CardModal = ({ listOptions, defaultList, onCancel, onSubmit }: Props) => {
     validateOnBlur: true,
     onSubmit: (values) => {
       console.log(values);
-      onSubmit(values);
+      if (isEditing) {
+        handleEditSubmit(values);
+      } else onSubmit(values);
     },
   });
+
+  const isDisabled = deepEqual(initialValues, formik.values);
 
   return (
     <div className={styles.overlay}>
@@ -65,13 +80,15 @@ const CardModal = ({ listOptions, defaultList, onCancel, onSubmit }: Props) => {
             height={"20"}
           />
         </button>
-        <form className={styles.form}>
-          <h3 className={styles.heading}>Add the Card</h3>
+        <form className={styles.form} onSubmit={formik.handleSubmit}>
+          <h3 className={styles.heading}>{`${
+            isEditing ? "Edit" : "Add"
+          } the Card`}</h3>
           <div className={styles.fields}>
             <div className={styles.fieldContainer}>
               <label>List</label>
               <select
-                value={defaultList}
+                defaultValue={defaultList}
                 name="list"
                 onChange={formik.handleChange}
                 className={cn(styles.input, styles.select)}
@@ -112,12 +129,24 @@ const CardModal = ({ listOptions, defaultList, onCancel, onSubmit }: Props) => {
               )}
             </div>
             <div className={styles.actionContainer}>
-              <Button
-                btnType="submit"
-                text="Submit"
-                type="light"
-                handleClick={formik.handleSubmit}
-              />
+              {isEditing ? (
+                <div className={styles.editingActionContainer}>
+                  <Button
+                    btnType="button"
+                    text="Delete"
+                    type="dark"
+                    handleClick={handleDeleteCard}
+                  />
+                  <Button
+                    btnType="submit"
+                    text="Submit"
+                    type="light"
+                    isDisabled={isDisabled}
+                  />
+                </div>
+              ) : (
+                <Button btnType="submit" text="Submit" type="light" />
+              )}
             </div>
           </div>
         </form>

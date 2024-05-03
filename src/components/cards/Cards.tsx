@@ -8,14 +8,15 @@ import { CardType } from "../../type/type";
 import styles from "./cards.module.scss";
 
 type Props = {
+  list: string;
   cards: CardType[];
 };
 
-const Cards = ({ cards }: Props) => {
+const Cards = ({ list, cards }: Props) => {
   return (
     <div className={styles.cardsContainer}>
       {cards.map((card) => (
-        <Card card={card} key={card.id} />
+        <Card list={list} card={card} key={card.id} />
       ))}
     </div>
   );

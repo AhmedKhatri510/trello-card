@@ -8,19 +8,28 @@ type Props = {
   text: string;
   btnType?: "submit" | "reset" | "button" | undefined;
   type: "light" | "dark";
-  handleClick: () => void;
+  handleClick?: () => void;
+  isDisabled?: boolean;
 };
-const Button = ({ text, btnType, type, handleClick }: Props) => {
+const Button = ({
+  text,
+  btnType = "button",
+  type,
+  handleClick,
+  isDisabled = false,
+}: Props) => {
   const isLightBtn = type === "light";
   return (
     <button
-      type={btnType || "button"}
+      type={btnType}
       className={cn(
         styles.btn,
         { [styles.light]: isLightBtn },
-        { [styles.dark]: !isLightBtn }
+        { [styles.dark]: !isLightBtn },
+        { [styles.disabled]: isDisabled }
       )}
       onClick={handleClick}
+      disabled={isDisabled}
     >
       {text}
     </button>

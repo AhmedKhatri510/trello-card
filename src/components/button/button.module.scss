@@ -19,4 +19,8 @@
     background-color: #ff3600d4;
     color: white;
   }
+
+  &.disabled {
+    cursor: not-allowed !important;
+  }
 }
